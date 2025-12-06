@@ -8,6 +8,8 @@ async function ricercaCittà(){
     
     let v = document.getElementById('v_Lista');
 
+    v.innerHTML="";
+
     for(let i=0; i < listaCittà.length; i++){
         
         let riga = document.createElement('option');
