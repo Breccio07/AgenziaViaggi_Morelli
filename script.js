@@ -2,7 +2,7 @@
 
 let v = document.getElementById('v_Lista');
 
-v.addEventListener('change', aggiornaScritta);
+v.addEventListener('change', aggiorna);
 
 async function ricercaCittà() {
 
@@ -21,22 +21,26 @@ async function ricercaCittà() {
 
         v.appendChild(riga);
     }
+    aggiorna();
 
-    visualizzaPrenotazione();
+    visualizzaCittà();
 }
 
-function visualizzaPrenotazione() {
+function visualizzaCittà() {
 
-    let prenotazione = document.getElementById('prenotazione');
+    let prenotazione = document.getElementById('dettagliCittà');
     prenotazione.style.display = 'inline';
 }
 
-async function aggiornaScritta() {
+async function aggiorna() {
     
     let valore = v.value;
 
     let risposta = await fetch("http://localhost:8088/cities/" + valore);
-    let nomeCittà = await risposta.json();
+    let dett_città = await risposta.json();
 
-    let span = document.getElementById('span').innerText = nomeCittà.city;
+    let n_Città = document.getElementById('n_Città').innerText = dett_città.city;
+    let paese = document.getElementById('paese').innerText = dett_città.country;
+    let iso = document.getElementById('iso2').innerText = dett_città.iso2;
+    let popolazione = document.getElementById('popolazione').innerText = dett_città.population;
 }
