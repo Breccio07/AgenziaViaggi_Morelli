@@ -1,14 +1,17 @@
 "use strict"
 
+let v = document.getElementById('v_Lista');
+
+v.addEventListener('change',aggiornaScritta());
+
 async function ricercaCittà(){
+
+    v.innerHTML="";
+
     let città = document.getElementById('i_Città').value;
     
     let risposta = await fetch("http://localhost:8088/cities?city="+città);
     let listaCittà = await risposta.json();
-    
-    let v = document.getElementById('v_Lista');
-
-    v.innerHTML="";
 
     for(let i=0; i < listaCittà.length; i++){
         
@@ -18,4 +21,14 @@ async function ricercaCittà(){
 
         v.appendChild(riga);
     }
+
+    visualizzaPrenotazione();
+}
+
+function visualizzaPrenotazione(){
+
+    let prenotazione = document.getElementById('prenotazione');
+
+    prenotazione.style.display='inline';
+
 }

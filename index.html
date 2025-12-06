@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cities</title>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <input type="text" id="i_Città">
-    <button onclick="ricercaCittà()">INVIA</button>
-    <select id="v_Lista"></select>
+    <div>
+        <input type="text" id="i_Città">
+        <button onclick="ricercaCittà()">INVIA</button>
+        <select id="v_Lista"></select>
+    </div>
+    <div id="prenotazione">
+        <h1>Prenota subito per: <span id="testo"></span></h1>
+        <button>Prenota</button>
+    </div>
 </body>
 </html>
