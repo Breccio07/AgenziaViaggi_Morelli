@@ -2,19 +2,19 @@
 
 let v = document.getElementById('v_Lista');
 
-v.addEventListener('change',aggiornaScritta());
+v.addEventListener('change', aggiornaScritta);
 
-async function ricercaCittà(){
+async function ricercaCittà() {
 
-    v.innerHTML="";
+    v.innerHTML = "";
 
     let città = document.getElementById('i_Città').value;
-    
-    let risposta = await fetch("http://localhost:8088/cities?city="+città);
+
+    let risposta = await fetch("http://localhost:8088/cities?city=" + città);
     let listaCittà = await risposta.json();
 
-    for(let i=0; i < listaCittà.length; i++){
-        
+    for (let i = 0; i < listaCittà.length; i++) {
+
         let riga = document.createElement('option');
         riga.value = listaCittà[i].id;
         riga.innerText = listaCittà[i].city;
@@ -25,10 +25,18 @@ async function ricercaCittà(){
     visualizzaPrenotazione();
 }
 
-function visualizzaPrenotazione(){
+function visualizzaPrenotazione() {
 
     let prenotazione = document.getElementById('prenotazione');
+    prenotazione.style.display = 'inline';
+}
 
-    prenotazione.style.display='inline';
+async function aggiornaScritta() {
+    
+    let valore = v.value;
 
+    let risposta = await fetch("http://localhost:8088/cities/" + valore);
+    let nomeCittà = await risposta.json();
+
+    let span = document.getElementById('span').innerText = nomeCittà.city;
 }
