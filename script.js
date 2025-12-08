@@ -51,3 +51,16 @@ function visualizzaPrenotazione(){
     città.style.display='none';
     prenotazione.style.display = 'inline';
 }
+
+function impostaMin(idInput){
+    
+    const data = new Date();
+    const anno = data.getFullYear();
+    const mese = String(data.getMonth() + 1).padStart(2, "0");
+    const giorno = String(data.getDate()).padStart(2, "0");
+
+    const oggiFormattato = `${anno}-${mese}-${giorno}`;
+    document.getElementById(idInput).min = oggiFormattato;
+}
+
+impostaMin("i_DataA");
