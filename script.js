@@ -48,12 +48,16 @@ async function aggiorna() {
 }
 
 function visualizzaPrenotazione(){
+
+    let ricercaCittà = document.getElementById('ricercaCittà');
+    ricercaCittà.style.display = 'none';
+
     città.style.display='none';
     prenotazione.style.display = 'inline';
 }
 
 function impostaMin(idInput){
-    
+
     const data = new Date();
     const anno = data.getFullYear();
     const mese = String(data.getMonth() + 1).padStart(2, "0");
