@@ -4,6 +4,8 @@ let v = document.getElementById('v_Lista');
 v.addEventListener('change', aggiorna);
 
 let n_Città = document.getElementById('n_Città');
+let città = document.getElementById('dettagliCittà');
+let prenotazione = document.getElementById('prenotazione');
 
 async function ricercaCittà() {
 
@@ -28,10 +30,7 @@ async function ricercaCittà() {
 }
 
 function visualizzaCittà() {
-
-    let prenotazione = document.getElementById('dettagliCittà');
-    prenotazione.style.display = 'inline';
-
+    città.style.display = 'inline';
     n_Città.style.display = 'inline';
 }
 
@@ -46,4 +45,9 @@ async function aggiorna() {
     let paese = document.getElementById('paese').innerText = dett_città.country;
     let iso = document.getElementById('iso2').innerText = dett_città.iso2;
     let popolazione = document.getElementById('popolazione').innerText = dett_città.population;
+}
+
+function visualizzaPrenotazione(){
+    città.style.display='none';
+    prenotazione.style.display = 'inline';
 }
