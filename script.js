@@ -1,8 +1,9 @@
 "use strict"
 
 let v = document.getElementById('v_Lista');
-
 v.addEventListener('change', aggiorna);
+
+let n_Città = document.getElementById('n_Città');
 
 async function ricercaCittà() {
 
@@ -30,6 +31,8 @@ function visualizzaCittà() {
 
     let prenotazione = document.getElementById('dettagliCittà');
     prenotazione.style.display = 'inline';
+
+    n_Città.style.display = 'inline';
 }
 
 async function aggiorna() {
@@ -38,8 +41,8 @@ async function aggiorna() {
 
     let risposta = await fetch("http://localhost:8088/cities/" + valore);
     let dett_città = await risposta.json();
-
-    let n_Città = document.getElementById('n_Città').innerText = dett_città.city;
+    
+    n_Città.innerText = dett_città.city;
     let paese = document.getElementById('paese').innerText = dett_città.country;
     let iso = document.getElementById('iso2').innerText = dett_città.iso2;
     let popolazione = document.getElementById('popolazione').innerText = dett_città.population;
