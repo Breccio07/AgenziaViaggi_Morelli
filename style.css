@@ -1,11 +1,11 @@
-#dettagliCittà{
+#cityDetails {
     display: none;
 }
 
-#n_città{
+#cityName {
     display: none;
 }
 
-#prenotazione{
+#bookingSection {
     display: none;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +8,47 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="ricercaCittà">
-        <input type="text" id="i_Città">
-        <button onclick="ricercaCittà()">INVIA</button>
-        <select id="v_Lista"></select>
-    </div>
-    <h1 id="n_Città"></h1>
-    <div id="dettagliCittà">
-        <p><b>Paese: </b><span id="paese"></span></p>
-        <p><b>Codice ISO paese: </b><span id="iso2"></span></p>
-        <p><b>Popolazione: </b><span id="popolazione"></span></p>
-        <h2>Cosa aspetti? Prenota subito una stanza!</h2>
-        <button onclick="visualizzaPrenotazione()">Prenota</button>
-    </div>
-    <div id="prenotazione">
-        <p>Nome: <input type="text" id="i_Nome"></p>
-        <p>Data check-in <input type="date" id="i_DataA"></p>
-        <p>Data check-out <input type="date" id="i_DataR"></p>
-        <p>Numero di persone <input type="number" min='1' id="i_Persone"></p>
-        <button onclick="inviaPrenotazione()">INVIA</button>
+
+    <ul id="navbar">
+        <li onclick="showCityDetails()">Città</li>
+        <li onclick="showFlights()">Voli</li>
+        <li>Cerca
+            <ul>
+                <li onclick="searchHotelBooking()">Cerca prenotazione hotel</li>
+                <li onclick="searchFlightBooking()">Cerca prenotazione volo</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div id="citySection">
+
+        <div id="searchCitySection">
+            <input type="text" id="inputCity">
+            <div>
+                <button onclick="searchCity()">Cerca</button>
+                <select id="cityList"></select>
+            </div>
+        </div>
+
+        <h1 id="cityName"></h1>
+
+        <div id="cityDetails">
+            <p><b>Paese:</b> <span id="detailCountry"></span></p>
+            <p><b>Codice ISO:</b> <span id="detailIso2"></span></p>
+            <p><b>Popolazione:</b> <span id="detailPopulation"></span></p>
+
+            <h2>Prenota una stanza!</h2>
+            <button onclick="showBookingForm()">Prenota</button>
+        </div>
+
+        <div id="bookingSection">
+            <p>Nome: <input type="text" id="inputName"></p>
+            <p>Data check-in: <input type="date" id="inputCheckIn"></p>
+            <p>Data check-out: <input type="date" id="inputCheckOut"></p>
+            <p>Persone: <input type="number" min="1" id="inputGuests"></p>
+
+            <button onclick="sendBooking()">INVIA</button>
+        </div>
     </div>
 </body>
 </html>

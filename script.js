@@ -1,94 +1,110 @@
 "use strict"
 
-let v = document.getElementById('v_Lista');
-v.addEventListener('change', aggiorna);
+// ELEMENTI DOM
+const selectCityList = document.getElementById('cityList');
+selectCityList.addEventListener('change', updateCityDetails);
 
-let n_Città = document.getElementById('n_Città');
-let città = document.getElementById('dettagliCittà');
-let prenotazione = document.getElementById('prenotazione');
+const divCitySection = document.getElementById('citySection');
 
-async function ricercaCittà() {
+const cityNameTitle = document.getElementById('cityName');
+const cityDetailsDiv = document.getElementById('cityDetails');
+const bookingDiv = document.getElementById('bookingSection');
 
-    v.innerHTML = "";
+// CAMPI DI DETTAGLIO
+const detailCountry = document.getElementById('detailCountry');
+const detailIso2 = document.getElementById('detailIso2');
+const detailPopulation = document.getElementById('detailPopulation');
 
-    let città = document.getElementById('i_Città').value;
 
-    let risposta = await fetch("http://localhost:8088/cities?city=" + città);
-    let listaCittà = await risposta.json();
+// 🔍 RICERCA CITTÀ
+async function searchCity() {
 
-    for (let i = 0; i < listaCittà.length; i++) {
+    selectCityList.innerHTML = "";
 
-        let riga = document.createElement('option');
-        riga.value = listaCittà[i].id;
-        riga.innerText = listaCittà[i].city;
+    let city = document.getElementById('inputCity').value;
 
-        v.appendChild(riga);
+    let response = await fetch("http://10.1.0.52:8088/cities?city=" + city);
+    let cities = await response.json();
+
+    for (let i = 0; i < cities.length; i++) {
+        let option = document.createElement('option');
+        option.value = cities[i].id;
+        option.innerText = cities[i].city;
+        selectCityList.appendChild(option);
     }
-    aggiorna();
 
-    visualizzaCittà();
+    updateCityDetails();
+    showCityDetails();
 }
 
-function visualizzaCittà() {
-    città.style.display = 'inline';
-    n_Città.style.display = 'inline';
+
+// 🎯 MOSTRA SEZIONE DETTAGLI
+function showCityDetails() {
+    cityDetailsDiv.style.display = 'block';
+    cityNameTitle.style.display = 'block';
 }
 
-async function aggiorna() {
 
-    let valore = v.value;
+// 🔄 AGGIORNA DETTAGLI CITTÀ SELEZIONATA
+async function updateCityDetails() {
 
-    let risposta = await fetch("http://localhost:8088/cities/" + valore);
-    let dett_città = await risposta.json();
+    let id = selectCityList.value;
 
-    n_Città.innerText = dett_città.city;
-    let paese = document.getElementById('paese').innerText = dett_città.country;
-    let iso = document.getElementById('iso2').innerText = dett_città.iso2;
-    let popolazione = document.getElementById('popolazione').innerText = dett_città.population;
+    let response = await fetch("http://10.1.0.52:8088/cities/" + id);
+    let city = await response.json();
+
+    cityNameTitle.innerText = city.city;
+    detailCountry.innerText = city.country;
+    detailIso2.innerText = city.iso2;
+    detailPopulation.innerText = city.population;
 }
 
-function visualizzaPrenotazione() {
 
-    let ricercaCittà = document.getElementById('ricercaCittà');
-    ricercaCittà.style.display = 'none';
+// ✈️ PASSA ALLA PRENOTAZIONE
+function showBookingForm() {
 
-    città.style.display = 'none';
-    prenotazione.style.display = 'inline';
+    document.getElementById('searchCitySection').style.display = 'none';
+    cityDetailsDiv.style.display = 'none';
+
+    bookingDiv.style.display = 'block';
 }
 
-function impostaMin(idInput) {
+
+// 📅 IMPOSTA DATA MINIMA
+function setTodayMin(idInput) {
 
     const data = new Date();
     const anno = data.getFullYear();
     const mese = String(data.getMonth() + 1).padStart(2, "0");
     const giorno = String(data.getDate()).padStart(2, "0");
 
-    const oggiFormattato = `${anno}-${mese}-${giorno}`;
-    document.getElementById(idInput).min = oggiFormattato;
+    const today = `${anno}-${mese}-${giorno}`;
+    document.getElementById(idInput).min = today;
 }
 
-impostaMin("i_DataA");
+setTodayMin("inputCheckIn");
 
-async function inviaPrenotazione() {
-    let nome = document.getElementById('i_Nome').value;
-    let dataCheckIn = document.getElementById('i_DataA').value;
-    let dataCheckOut = document.getElementById('i_DataR').value;
-    let numP = document.getElementById('i_Persone').value;
 
-    let prenotazione = {
-        cityId: Number(v.value),
-        name: nome,
-        from: dataCheckIn,
-        to: dataCheckOut,
-        guests: Number(numP)
+// 📤 INVIA PRENOTAZIONE
+async function sendBooking() {
+    let name = document.getElementById('inputName').value;
+    let checkIn = document.getElementById('inputCheckIn').value;
+    let checkOut = document.getElementById('inputCheckOut').value;
+    let guests = document.getElementById('inputGuests').value;
+
+    let booking = {
+        cityId: Number(selectCityList.value),
+        name: name,
+        from: checkIn,
+        to: checkOut,
+        guests: Number(guests)
     };
 
-    let parametriRichiesta = {
+    let params = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(prenotazione)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(booking)
     };
-    let risposta = await fetch("http://localhost:8088/reservations", parametriRichiesta);
+
+    await fetch("http://10.1.0.52:8088/reservations", params);
 }
