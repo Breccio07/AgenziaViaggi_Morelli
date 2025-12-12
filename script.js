@@ -4,18 +4,6 @@
 const selectCityList = document.getElementById('cityList');
 selectCityList.addEventListener('change', updateCityDetails);
 
-const divCitySection = document.getElementById('citySection');
-
-const cityNameTitle = document.getElementById('cityName');
-const cityDetailsDiv = document.getElementById('cityDetails');
-const bookingDiv = document.getElementById('bookingSection');
-
-// CAMPI DI DETTAGLIO
-const detailCountry = document.getElementById('detailCountry');
-const detailIso2 = document.getElementById('detailIso2');
-const detailPopulation = document.getElementById('detailPopulation');
-
-
 // 🔍 RICERCA CITTÀ
 async function searchCity() {
 
@@ -40,8 +28,8 @@ async function searchCity() {
 
 // 🎯 MOSTRA SEZIONE DETTAGLI
 function showCityDetails() {
-    cityDetailsDiv.style.display = 'block';
-    cityNameTitle.style.display = 'block';
+    document.getElementById('cityDetails').style.display = 'block';
+    document.getElementById('cityName').style.display = 'block';
 }
 
 
@@ -53,10 +41,10 @@ async function updateCityDetails() {
     let response = await fetch("http://10.1.0.52:8088/cities/" + id);
     let city = await response.json();
 
-    cityNameTitle.innerText = city.city;
-    detailCountry.innerText = city.country;
-    detailIso2.innerText = city.iso2;
-    detailPopulation.innerText = city.population;
+    document.getElementById('cityName').innerText = city.city;
+    document.getElementById('detailCountry').innerText = city.country;
+    document.getElementById('detailIso2').innerText = city.iso2;
+    document.getElementById('detailPopulation').innerText = city.population;
 }
 
 
@@ -64,9 +52,9 @@ async function updateCityDetails() {
 function showBookingForm() {
 
     document.getElementById('searchCitySection').style.display = 'none';
-    cityDetailsDiv.style.display = 'none';
+    document.getElementById('cityDetails').style.display = 'none';
 
-    bookingDiv.style.display = 'block';
+    document.getElementById('bookingSection').style.display = 'block';
 }
 
 
@@ -107,4 +95,9 @@ async function sendBooking() {
     };
 
     await fetch("http://10.1.0.52:8088/reservations", params);
+}
+
+function searchHotelBooking(){
+    document.querySelectorAll('.div')
+    document.getElementById('searchPrCity').style.display = 'inline'
 }
