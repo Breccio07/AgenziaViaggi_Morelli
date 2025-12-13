@@ -1,103 +1,116 @@
 "use strict"
 
-// ELEMENTI DOM
-const selectCityList = document.getElementById('cityList');
-selectCityList.addEventListener('change', updateCityDetails);
+const listaCitta = document.getElementById('listaCitta');
+listaCitta.addEventListener('change', aggiornaDettagliCitta);
 
-// 🔍 RICERCA CITTÀ
-async function searchCity() {
+async function cercaCitta() {
 
-    selectCityList.innerHTML = "";
+    listaCitta.innerHTML = "";
 
-    let city = document.getElementById('inputCity').value;
+    let citta = document.getElementById('inputCitta').value;
 
-    let response = await fetch("http://10.1.0.52:8088/cities?city=" + city);
-    let cities = await response.json();
+    let response = await fetch("http://localhost:8088/cities?city=" + citta);
+    let cittaTrovate = await response.json();
 
-    for (let i = 0; i < cities.length; i++) {
+    for (let i = 0; i < cittaTrovate.length; i++) {
         let option = document.createElement('option');
-        option.value = cities[i].id;
-        option.innerText = cities[i].city;
-        selectCityList.appendChild(option);
+        option.value = cittaTrovate[i].id;
+        option.innerText = cittaTrovate[i].city;
+        listaCitta.appendChild(option);
     }
 
-    updateCityDetails();
-    showCityDetails();
+    aggiornaDettagliCitta();
+    mostraSezioneCitta();
 }
 
-
-// 🎯 MOSTRA SEZIONE DETTAGLI
-function showCityDetails() {
-    document.getElementById('cityDetails').style.display = 'block';
-    document.getElementById('cityName').style.display = 'block';
+function mostraSezioneCitta() {
+    document.getElementById('dettagliCitta').style.display = 'block';
+    document.getElementById('nomeCitta').style.display = 'block';
 }
 
+async function aggiornaDettagliCitta() {
 
-// 🔄 AGGIORNA DETTAGLI CITTÀ SELEZIONATA
-async function updateCityDetails() {
+    let id = listaCitta.value;
 
-    let id = selectCityList.value;
+    let response = await fetch("http://localhost:8088/cities/" + id);
+    let citta = await response.json();
 
-    let response = await fetch("http://10.1.0.52:8088/cities/" + id);
-    let city = await response.json();
-
-    document.getElementById('cityName').innerText = city.city;
-    document.getElementById('detailCountry').innerText = city.country;
-    document.getElementById('detailIso2').innerText = city.iso2;
-    document.getElementById('detailPopulation').innerText = city.population;
+    document.getElementById('nomeCitta').innerText = citta.city;
+    document.getElementById('dettPaese').innerText = citta.country;
+    document.getElementById('dettIso2').innerText = citta.iso2;
+    document.getElementById('dettPopolazione').innerText = citta.population;
 }
 
+function mostraFormPrenotazione() {
+    document.getElementById('ricercaCitta').style.display = 'none';
+    document.getElementById('dettagliCitta').style.display = 'none';
 
-// ✈️ PASSA ALLA PRENOTAZIONE
-function showBookingForm() {
-
-    document.getElementById('searchCitySection').style.display = 'none';
-    document.getElementById('cityDetails').style.display = 'none';
-
-    document.getElementById('bookingSection').style.display = 'block';
+    document.getElementById('sezionePrenotazioneHotel').style.display = 'block';
 }
 
-
-// 📅 IMPOSTA DATA MINIMA
-function setTodayMin(idInput) {
+function impostaDataMinima(idInput) {
 
     const data = new Date();
     const anno = data.getFullYear();
     const mese = String(data.getMonth() + 1).padStart(2, "0");
     const giorno = String(data.getDate()).padStart(2, "0");
 
-    const today = `${anno}-${mese}-${giorno}`;
-    document.getElementById(idInput).min = today;
+    const oggi = `${anno}-${mese}-${giorno}`;
+    document.getElementById(idInput).min = oggi;
 }
 
-setTodayMin("inputCheckIn");
+impostaDataMinima("inputCheckIn");
 
+async function inviaPrenotazione() {
 
-// 📤 INVIA PRENOTAZIONE
-async function sendBooking() {
-    let name = document.getElementById('inputName').value;
+    let nome = document.getElementById('inputNome').value;
     let checkIn = document.getElementById('inputCheckIn').value;
     let checkOut = document.getElementById('inputCheckOut').value;
-    let guests = document.getElementById('inputGuests').value;
+    let persone = document.getElementById('inputPersone').value;
 
-    let booking = {
-        cityId: Number(selectCityList.value),
-        name: name,
+    let prenotazione = {
+        cityId: Number(listaCitta.value),
+        name: nome,
         from: checkIn,
         to: checkOut,
-        guests: Number(guests)
+        guests: Number(persone)
     };
 
     let params = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(booking)
+        body: JSON.stringify(prenotazione)
     };
 
-    await fetch("http://10.1.0.52:8088/reservations", params);
+    await fetch("http://localhost:8088/reservations", params);
 }
 
-function searchHotelBooking(){
-    document.querySelectorAll('.div')
-    document.getElementById('searchPrCity').style.display = 'inline'
+function mostraRicercaPrenHotel() {
+
+    document.getElementById('sezioneCitta').style.display = 'none';
+    document.getElementById('dettagliCitta').style.display = 'none';
+    document.getElementById('sezioneVoli').style.display = 'none';
+
+    document.getElementById('ricercaPrenHotelSezione').style.display = 'block';
+}
+
+async function cercaPrenotazioniHotel() {
+
+    let nomePr = document.getElementById('inputNomeRicerca');
+
+    let response = await fetch("http://localhost:8088/reservations?name=" + nomePr.value);
+    let prTrovate = await response.json();
+
+    let div = document.getElementById('listaPrenotazioni');
+    div.innerHTML='';
+
+    for (let i = 0; i < prTrovate.length; i++) {
+
+        div.innerHTML += '<h1>Prenotazione: '+(i+1)+'</h1>'
+        div.innerHTML += '<p>CityID: '+prTrovate[i].cityId+'</p>'
+        div.innerHTML += '<p>Data check-in: '+prTrovate[i].from+'</p>'
+        div.innerHTML += '<p>Data check-out: '+prTrovate[i].to+'</p>'
+        div.innerHTML += '<p>Prenotazione: '+prTrovate[i].guests+'</p>'
+
+    }
 }

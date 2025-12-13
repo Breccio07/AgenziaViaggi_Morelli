@@ -1,15 +1,15 @@
-#cityDetails {
+#dettagliCitta {
     display: none;
 }
 
-#cityName {
+#nomeCitta {
     display: none;
 }
 
-#bookingSection {
+#sezionePrenotazioneHotel {
     display: none;
 }
 
-#searchPrCity{
+#ricercaPrenHotelSezione {
     display: none;
 }
