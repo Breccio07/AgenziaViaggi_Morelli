@@ -15,7 +15,7 @@ async function cercaCitta() {
     for (let i = 0; i < cittaTrovate.length; i++) {
         let option = document.createElement('option');
         option.value = cittaTrovate[i].id;
-        option.innerText = cittaTrovate[i].city;
+        option.innerText = cittaTrovate[i].city + ' ('+ cittaTrovate[i].iso2 +')';
         listaCitta.appendChild(option);
     }
 
@@ -37,7 +37,6 @@ async function aggiornaDettagliCitta() {
 
     document.getElementById('nomeCitta').innerText = citta.city;
     document.getElementById('dettPaese').innerText = citta.country;
-    document.getElementById('dettIso2').innerText = citta.iso2;
     document.getElementById('dettPopolazione').innerText = citta.population;
 }
 
@@ -113,4 +112,12 @@ async function cercaPrenotazioniHotel() {
         div.innerHTML += '<p>Prenotazione: '+prTrovate[i].guests+'</p>'
 
     }
+}
+function mostraSezioneVoli() {
+
+    document.getElementById('sezioneCitta').style.display = 'none';
+    document.getElementById('dettagliCitta').style.display = 'none';
+    document.getElementById('ricercaPrenHotelSezione').style.display = 'none';
+
+    document.getElementById('sezioneVoli').style.display = 'block';
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,12 @@
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <ul id="barraNavigazione">
         <li onclick="mostraSezioneCitta()">Città</li>
-        <li onclick="mostraVoli()">Voli</li>
+        <li onclick="mostraSezioneVoli()">Voli</li>
         <li>Cerca
             <ul>
                 <li onclick="mostraRicercaPrenHotel()">Cerca prenotazione hotel</li>
@@ -32,10 +34,9 @@
 
         <div id="dettagliCitta">
             <p><b>Paese:</b> <span id="dettPaese"></span></p>
-            <p><b>Codice ISO:</b> <span id="dettIso2"></span></p>
             <p><b>Popolazione:</b> <span id="dettPopolazione"></span></p>
 
-            <h2>Prenota una stanza!</h2>
+            <h2> Cosa aspetti? Prenota una stanza!</h2>
             <button onclick="mostraFormPrenotazione()">Prenota</button>
         </div>
 
@@ -49,7 +50,13 @@
         </div>
     </div>
 
-    <div id="sezioneVoli"></div>
+    <div id="sezioneVoli">
+        <h1>Cerca i Voli</h1>
+        <p>Partenza: <input type="text" id="inputPartenza"></p>
+        <p>Arrivo: <input type="text" id="inputArrivo"></p>
+        <button onclick="cercaVoli()">INVIA</button>
+        <div id="listaVoli"></div>
+    </div>
 
     <div id="ricercaPrenHotelSezione">
         <h1>Cerca la prenotazione</h1>
@@ -61,4 +68,5 @@
     <div id="ricercaPrenVoloSezione"></div>
 
 </body>
+
 </html>
