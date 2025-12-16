@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Città</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <ul id="barraNavigazione">
+        <li onclick="mostraSezioneCitta()">Città</li>
+        <li onclick="mostraSezioneVoli()">Voli</li>
+        <li>Cerca
+            <ul>
+                <li onclick="mostraRicercaPrenHotel()">Cerca prenotazione hotel</li>
+                <li onclick="mostraRicercaPrenVolo()">Cerca prenotazione volo</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div id="sezioneCitta">
+
+        <div id="ricercaCitta">
+            <input type="text" id="inputCitta">
+            <button onclick="cercaCitta()">Cerca</button>
+            <select id="listaCitta"></select>
+        </div>
+
+        <h1 id="nomeCitta"></h1>
+
+        <div id="dettagliCitta">
+            <p><b>Paese:</b> <span id="dettPaese"></span></p>
+            <p><b>Popolazione:</b> <span id="dettPopolazione"></span></p>
+
+            <h2> Cosa aspetti? Prenota una stanza!</h2>
+            <button onclick="mostraFormPrenotazione()">Prenota</button>
+        </div>
+
+        <div id="sezionePrenotazioneHotel">
+            <p>Nome: <input type="text" id="inputNome"></p>
+            <p>Data check-in: <input type="date" id="inputCheckIn"></p>
+            <p>Data check-out: <input type="date" id="inputCheckOut"></p>
+            <p>Persone: <input type="number" min="1" id="inputPersone"></p>
+
+            <button onclick="inviaPrenotazione()">INVIA</button>
+        </div>
+    </div>
+
+    <div id="sezioneVoli">
+        <h1>Cerca i Voli</h1>
+            <input type="text" id="inputCitta">
+            <button onclick="cercaCitta()">Cerca</button>
+            <select id="listaCitta"></select>
+    </div>
+
+    <div id="ricercaPrenHotelSezione">
+        <h1>Cerca la prenotazione</h1>
+        <p>Nome: <input type="text" id="inputNomeRicerca"></p>
+        <button onclick="cercaPrenotazioniHotel()">Cerca</button>
+        <div id="listaPrenotazioni"></div>
+    </div>
+
+    <div id="ricercaPrenVoloSezione"></div>
+
+</body>
+
+</html>

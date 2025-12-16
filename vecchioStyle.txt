@@ -1,0 +1,18 @@
+#dettagliCitta {
+    display: none;
+}
+
+#nomeCitta {
+    display: none;
+}
+
+#sezionePrenotazioneHotel {
+    display: none;
+}
+
+#ricercaPrenHotelSezione {
+    display: none;
+}
+#sezioneVoli{
+    display: none;
+}
