@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Città</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Cities</h1>
+        <p>Tutto per la tua vacanza da sogno!</p>
+    </header>
+    <nav>
+        <ul>
+            <li onclick="visualizzaHotel()">Hotel</li>
+            <li onclick="visualizzaVoli()">Voli</li>
+            <li onclick="visualizzaRicerca()">Ricerca</li>
+        </ul>
+    </nav>
+    <section id="hotel">
+        <h2>Prenotazione Hotel</h2>
+        <p>
+            Seleziona la città <input type="text" id="hotelCittà"><select id="hotelListaCittà"></select><button onclick="cercaCittà('hotelListaCittà')">CERCA</button>
+        </p>
+        <p>
+            Nome <input type="text" id="hotelNomePr">
+        </p>
+        <p>
+            Data Check-in <input type="date" id="hotelCheck-in">
+        </p>
+        <p>
+            Data Check-out <input type="date" id="hotelCheck-out">
+        </p>
+        <p>
+            Numero di persone <input type="number" id="hotelNumPersone">
+        </p>
+        <button onclick="inviaPrenotazione()">INVIA</button>
+    </section>
+    <section id="voli">
+    </section>
+    <section id="ricerca">
+        <h2>Cerca una delle tue prenotazioni!</h2>
+        <section id="ricercaHotel">
+            <h2>Ricerca hotel</h2>
+            <p>
+                Nome prenotazione <input type="text" id="ricercaNomePr">
+            </p>
+            <p>
+                ID città <input type="text" id="ricercaIdCittà">
+            </p>
+            <button onclick="ricercaHotel()">INVIA</button>
+            <div id="listaRicercaHotel"></div>
+        </section>
+        <section id="ricercaVoli">
+            <h2>Ricerca Voli</h2>
+        </section>
+    </section>
+</body>
+</html>
