@@ -4,12 +4,12 @@ let select;
 
 let sito = 'http://localhost:8088';
 
-async function cercaCittà(idSelect) {
+async function cercaCittà(idSelect,idInput) {
 
     select = document.getElementById(idSelect);
     select.innerHTML = '';
 
-    let nomeCittà = document.getElementById('hotelCittà').value;
+    let nomeCittà = document.getElementById(idInput).value;
 
     let response = await fetch(sito + "/cities?city=" + nomeCittà);
     let cittàTrovate = await response.json();
@@ -89,30 +89,26 @@ function visualizzaRicerca() {
 async function ricercaHotel() {
 
     let nome = document.getElementById('ricercaNomePr').value;
-    let nomeCittà = document.getElementById('ricercaIdCittà').value;
+    let città = document.getElementById('ricercaListaCittà').value;
+
+    let response;
 
     let listaRicercaHotel = document.getElementById('listaRicercaHotel');
 
     listaRicercaHotel.innerHTML = '';
 
-    let response;
-
-    if (nomeCittà !== "") {
-        response = await fetch(sito + '/cities/' + nomeCittà);
-
-        let città = await response.json();
-
-        let id=città.id;
-
-        if (nome !== "") {
-            response = await fetch(sito + "/reservations?name=" + nome + "?cityId=" + id);
-        } else {
-            response = await fetch(sito + "/reservations?cityId=" + id);
+    if(nome !== ''){
+        if(città !== ''){
+            response = await fetch(sito + "/reservations?name="+nome+"&cityId="+città);
+        }else{
+            response = await fetch(sito + "/reservations?name="+nome);
         }
-    } else if (nome !== "") {
-        response = await fetch(sito + "/reservations?name=" + nome);
-    } else {
-        response = await fetch(sito + "/reservations");
+    }else{
+        if(città !== ''){
+            response = await fetch(sito + "/reservations?cityId="+città);
+        }else{
+            response = await fetch(sito + "/reservations");
+        }
     }
 
     let prTrovate = await response.json();
@@ -120,12 +116,13 @@ async function ricercaHotel() {
     for (let i = 0; i < prTrovate.length; i++) {
 
         let div = document.createElement('div');
-        div.innerHTML += '<h3>Prenotazione trovata num '+(i+1)+'</h3>';
-        div.innerHTML += '<p> ID città: '+prTrovate[i].cityId+'</p>';
-        div.innerHTML += '<p> Nome prenotazione: '+prTrovate[i].name+'</p>';
-        div.innerHTML += '<p> Data Check-in: '+prTrovate[i].from+'</p>';
-        div.innerHTML += '<p> Data Check-out: '+prTrovate[i].to+'</p>';
-        div.innerHTML += '<p> Numero persone: '+prTrovate[i].guests+'</p>';
+        div.innerHTML += '<h3>Prenotazione trovata num ' + (i + 1) + '</h3>';
+        div.innerHTML += '<p> ID città: ' + prTrovate[i].cityId + '</p>';
+        div.innerHTML += '<p> Nome prenotazione: ' + prTrovate[i].name + '</p>';
+        div.innerHTML += '<p> Data Check-in: ' + prTrovate[i].from + '</p>';
+        div.innerHTML += '<p> Data Check-out: ' + prTrovate[i].to + '</p>';
+        div.innerHTML += '<p> Numero persone: ' + prTrovate[i].guests + '</p>';
+        div.innerHTML += '<hr>'
 
         listaRicercaHotel.appendChild(div);
     }

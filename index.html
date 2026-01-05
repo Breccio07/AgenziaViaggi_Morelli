@@ -22,7 +22,7 @@
     <section id="hotel">
         <h2>Prenotazione Hotel</h2>
         <p>
-            Seleziona la città <input type="text" id="hotelCittà"><select id="hotelListaCittà"></select><button onclick="cercaCittà('hotelListaCittà')">CERCA</button>
+            Seleziona la città <input type="text" id="hotelCittà"><select id="hotelListaCittà"></select><button onclick="cercaCittà('hotelListaCittà','hotelCittà')">CERCA</button>
         </p>
         <p>
             Nome <input type="text" id="hotelNomePr">
@@ -48,7 +48,7 @@
                 Nome prenotazione <input type="text" id="ricercaNomePr">
             </p>
             <p>
-                ID città <input type="text" id="ricercaIdCittà">
+                Seleziona la città <input type="text" id="ricercaCittà"><select id="ricercaListaCittà"></select><button onclick="cercaCittà('ricercaListaCittà','ricercaCittà')">CERCA</button>
             </p>
             <button onclick="ricercaHotel()">INVIA</button>
             <div id="listaRicercaHotel"></div>
