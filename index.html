@@ -39,6 +39,20 @@
         <button onclick="inviaPrenotazione()">INVIA</button>
     </section>
     <section id="voli">
+        <h2>Prenotazione hotel</h2>
+        <p>
+            Città di partenza: <input type="text" id="voloPartenza"><select id="voloListaCittà"></select>
+            <button onclick="cercaCittà('voloListaCittà','voloPartenza')">CERCA</button>
+            <button onclick="aggiornaDestinazione()">CERCA CITTA' ARRIVO</button>
+        </p>
+        </p>
+        <p>
+            Città di arrivo: <select type="text" id="voloDestinazione"></select>
+        </p>
+        <p>
+            Data del volo: 
+        </p>
+        <button>INVIA</button>
     </section>
     <section id="ricerca">
         <h2>Cerca una delle tue prenotazioni!</h2>

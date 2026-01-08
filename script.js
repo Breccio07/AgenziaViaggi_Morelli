@@ -1,12 +1,10 @@
 "use strict"
 
-let select;
-
 let sito = 'http://localhost:8088';
 
 async function cercaCittà(idSelect,idInput) {
 
-    select = document.getElementById(idSelect);
+    let select = document.getElementById(idSelect);
     select.innerHTML = '';
 
     let nomeCittà = document.getElementById(idInput).value;
@@ -44,6 +42,8 @@ async function inviaPrenotazione() {
     let checkIn = document.getElementById('hotelCheck-in').value;
     let checkOut = document.getElementById('hotelCheck-out').value;
     let persone = document.getElementById('hotelNumPersone').value;
+
+    let select = document.getElementById('hotelListaCittà');
 
     let prenotazione = {
         cityId: Number(select.value),
@@ -126,4 +126,12 @@ async function ricercaHotel() {
 
         listaRicercaHotel.appendChild(div);
     }
+}
+
+async function aggiornaDestinazione(){
+
+    let idPartenza = document.getElementById('voloListaCittà').value;
+
+    
+
 }
