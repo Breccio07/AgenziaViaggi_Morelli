@@ -116,9 +116,14 @@ async function ricercaHotel() {
 
     for (let i = 0; i < prTrovate.length; i++) {
 
+        response = await fetch(sito + "/cities/"+prTrovate[i].cityId);
+        let città = await response.json();
+
+        let nomeCittà = città.city;
+
         let div = document.createElement('div');
         div.innerHTML += '<h3>Prenotazione trovata num ' + (i + 1) + '</h3>';
-        div.innerHTML += '<p> ID città: ' + prTrovate[i].cityId + '</p>';
+        div.innerHTML += '<p> Nome città: ' + nomeCittà + '</p>';
         div.innerHTML += '<p> Nome prenotazione: ' + prTrovate[i].name + '</p>';
         div.innerHTML += '<p> Data Check-in: ' + prTrovate[i].from + '</p>';
         div.innerHTML += '<p> Data Check-out: ' + prTrovate[i].to + '</p>';
