@@ -1,6 +1,6 @@
 "use strict"
 
-let sito = 'http://localhost:8088';
+let sito = 'http://10.1.0.52:8088';
 
 async function cercaCittà(idSelect,idInput) {
 
@@ -35,6 +35,7 @@ function impostaDataMinima(idInput, num) {
 
 impostaDataMinima("hotelCheck-in", 0);
 impostaDataMinima("hotelCheck-out", 1);
+impostaDataMinima("voloData", 0);
 
 async function inviaPrenotazione() {
 
@@ -131,7 +132,89 @@ async function ricercaHotel() {
 async function aggiornaDestinazione(){
 
     let idPartenza = document.getElementById('voloListaCittà').value;
+    let destinazione = [];
 
+    let select = document.getElementById('voloDestinazione');
+
+    let response = await fetch(sito+'/flights?from='+idPartenza);
+    let cittàTrovate = await response.json();
+
+    for( let i = 0; i < cittàTrovate.length; i ++){
+        destinazione[i] = cittàTrovate[i].to;
+    }
+
+    for (let i = 0; i < destinazione.length; i++) {
+        let option = document.createElement('option');
+        option.value = destinazione[i].id;
+        option.innerText = destinazione[i].city + ' (' + destinazione[i].iso2 + ')';
+        select.appendChild(option);
+    }
+}
+
+async function inviaVolo() {
     
+    let nomeVolo = document.getElementById('voloNome').value;
+    let data = document.getElementById('voloData').value;
 
+    let idPartenza = document.getElementById('voloListaCittà').value;
+    let idDestinazione = document.getElementById('voloDestinazione').value;
+
+    let response = await fetch(sito+'/flights?from='+idPartenza+'&to='+idDestinazione);
+    let volo = await response.json();
+
+    let voloId = volo[0].id;
+
+    let biglietto = {
+        name: nomeVolo,
+        flightId: voloId,
+        date: data
+    };
+
+    let params = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(biglietto)
+    };
+
+    await fetch(sito + "/tickets", params);
+}
+
+async function ricercaVolo() {
+    
+    let nome = document.getElementById('ricercaNomeB').value;
+    let biglietto = document.getElementById('ricercaBiglietto').value;
+
+    let response;
+
+    let listaRicercaBiglietto = document.getElementById('listaRicercaBiglietto');
+
+    listaRicercaBiglietto.innerHTML = '';
+
+    if(nome !== ''){
+        if(biglietto !== ''){
+            response = await fetch(sito + "/tickets?name="+nome+"&flightId="+città);
+        }else{
+            response = await fetch(sito + "/tickets?name="+nome);
+        }
+    }else{
+        if(biglietto !== ''){
+            response = await fetch(sito + "/tickets?flightId="+città);
+        }else{
+            response = await fetch(sito + "/reservations");
+        }
+    }
+
+    let bTrovate = await response.json();
+
+    for (let i = 0; i < bTrovate.length; i++) {
+
+        let div = document.createElement('div');
+        div.innerHTML += '<h3>Biglietto trovato num ' + (i + 1) + '</h3>';
+        div.innerHTML += '<p> Nome biglietto :' + bTrovate[i].name + '</p>';
+        div.innerHTML += '<p> ID del volo: ' + bTrovate[i].flightId + '</p>';
+        div.innerHTML += '<p> Data: ' + bTrovate[i].date + '</p>';
+        div.innerHTML += '<hr>'
+
+        listaRicercaBiglietto.appendChild(div);
+    }
 }
