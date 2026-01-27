@@ -20,10 +20,10 @@ async function cercaCittà(idSelect,idInput) {
     }
 }
 
-function impostaDataMinima(idInput, num) {
+function impostaDataMinima(idInput) {
 
     const data = new Date();
-    data.setDate(data.getDate() + num);
+    data.setDate(data.getDate());
 
     const anno = data.getFullYear();
     const mese = String(data.getMonth() + 1).padStart(2, "0");
@@ -33,9 +33,9 @@ function impostaDataMinima(idInput, num) {
     document.getElementById(idInput).min = oggi;
 }
 
-impostaDataMinima("hotelCheck-in", 0);
-impostaDataMinima("hotelCheck-out", 1);
-impostaDataMinima("voloData", 0);
+impostaDataMinima("hotelCheck-in");
+impostaDataMinima("hotelCheck-out")
+impostaDataMinima("voloData");
 
 async function inviaPrenotazione() {
 
@@ -197,15 +197,15 @@ async function ricercaVolo() {
 
     if(nome !== ''){
         if(biglietto !== ''){
-            response = await fetch(sito + "/tickets?name="+nome+"&flightId="+città);
+            response = await fetch(sito + "/tickets?name="+nome+"&flightId="+biglietto);
         }else{
             response = await fetch(sito + "/tickets?name="+nome);
         }
     }else{
         if(biglietto !== ''){
-            response = await fetch(sito + "/tickets?flightId="+città);
+            response = await fetch(sito + "/tickets?flightId="+biglietto);
         }else{
-            response = await fetch(sito + "/reservations");
+            response = await fetch(sito + "/tickets");
         }
     }
 
